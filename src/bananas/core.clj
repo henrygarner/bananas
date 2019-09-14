@@ -50,3 +50,11 @@
 (defn apo
   [f]
   (<<< (||| identity (fmap (apo f))) f))
+
+(defn histo
+  [f]
+  (cata (&&& f identity)))
+
+(defn futu
+  [f]
+  (ana (||| f identity)))
