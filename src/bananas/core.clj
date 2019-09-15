@@ -53,8 +53,8 @@
 
 (defn histo
   [f]
-  (>>> (cata (&&& f identity)) first))
+  (comp first (cata (&&& f identity))))
 
 (defn futu
   [f]
-  (<<< first (ana (||| f identity))))
+  (comp first (ana (||| f identity))))

@@ -41,20 +41,21 @@
               (if (seq p)
                 (inc (compress (second (first p))))
                 0))
-            (expand [n]
-              (if (<= n 0)
-                (vector)
-                (vector (expand (dec n)))))
-            (separate [pred xs]
+            (bifurcate [pred xs]
               (vector (filter pred xs) (remove pred xs)))]
       (if (= x [])
         1
         (let [given (compress x)
               valid (filter #(<= % given) coins)
               remaining (map #(- given %) valid)
-              [zeros to-process] (separate zero? remaining)
+              [zeros to-process] (bifurcate zero? remaining)
               results (apply + (map #(or (lookup x %) 0) to-process))]
           (+ (count zeros) results))))))
+
+(defn expand [n]
+  (if (<= n 0)
+    (vector)
+    (vector (expand (dec n)))))
 
 (deftest histo
   []
